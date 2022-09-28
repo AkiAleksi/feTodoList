@@ -1,18 +1,32 @@
 import React from 'react';
 
 export default function TodoTable(props) {
-    console.log(props)
+  
+    if (props.todos.length === 0) {
+        return (
+        <div style={{marginTop: 100}}>
+            Nothing to do for now. Add new tasks. 
+        </div>
+        )
+    } else {
+        return (
+    
+            <table className='table'>
+                <thead>
+                <tr><th>Date</th>
+                    <th>Task</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.todos.map((todo, idx) => {
+                            return <tr key={idx}><td>{todo.date}</td><td>{todo.desc}</td></tr>
+                        })
+                    }
+                </tbody>
+            </table>
+            ); 
+    }
 
-    return (
-    <table className='table'>
-        <tbody>
-            {
-                props.todos.map((todo, idx) => {
-                    return <tr key={idx}><td>{todo.date}</td><td>{todo.desc}</td></tr>
-                })
-            }
-        </tbody>
-    </table>
-    );
 
 }

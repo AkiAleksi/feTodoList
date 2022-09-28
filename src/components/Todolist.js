@@ -6,12 +6,12 @@ export default function TodoList() {
     const [todos, setTodos] = useState([]);
 
     const inputChanged = (event, type) => {
-        if(type === 'description') {
-            setNewTodo( {...newTodo, desc: event.target.value })
+        if (type === 'description') {
+            setNewTodo({ ...newTodo, desc: event.target.value })
         }
 
-        if(type === 'date') {
-            setNewTodo( {...newTodo, date: event.target.value})
+        if (type === 'date') {
+            setNewTodo({ ...newTodo, date: event.target.value })
         }
     }
 
@@ -20,10 +20,15 @@ export default function TodoList() {
     }
 
     return (
+
         <div className="container">
-            <input type="text" onChange={ (event) => inputChanged(event, "description")} value={newTodo.desc} />
-            <input type="date" onChange={ (event) => inputChanged(event, "date")} value={newTodo.date} />
-            <button onClick={addTodo}>Add</button>
+            <h1>Simple Todolist</h1>
+            <div className="input-group">
+                <span className="input-group-text">Date and task</span>
+                <input className="form-control" type="date" onChange={(event) => inputChanged(event, "date")} value={newTodo.date} />
+                <input className="form-control" type="text" onChange={(event) => inputChanged(event, "description")} value={newTodo.desc} />
+            </div>
+            <button onClick={addTodo} type="button" className="btn btn-danger">Add a new task</button>
             <TodoTable todos={todos} />
         </div>
     );
