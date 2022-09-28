@@ -16,7 +16,6 @@ export default function TodoList() {
     }
 
     const addTodo = (event) => {
-        // Vscode testaus push
         setTodos([...todos, newTodo]);
     }
 
