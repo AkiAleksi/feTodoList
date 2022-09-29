@@ -19,6 +19,10 @@ export default function TodoList() {
         setTodos([...todos, newTodo]);
     }
 
+    const deleteTodo = (row) => {
+        setTodos(todos.filter((todos, idx) => row !== idx));
+    }
+
     return (
 
         <div className="container">
@@ -29,7 +33,8 @@ export default function TodoList() {
                 <input className="form-control" type="text" onChange={(event) => inputChanged(event, "description")} value={newTodo.desc} />
             </div>
             <button onClick={addTodo} type="button" className="btn btn-danger">Add a new task</button>
-            <TodoTable todos={todos} />
+           
+            <TodoTable deleteRow={deleteTodo} todos={todos}/>
         </div>
     );
 };
