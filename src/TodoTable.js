@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-
+import Button from'@mui/material/Button';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -41,7 +41,7 @@ export default function TodoTable(props) {
                     columnDefs={columnDefs}
                     rowData={props.todos}>
                 </AgGridReact>
-                <button onClick={() => _deleteRow()}>Delete</button>
+                <Button onClick={() => _deleteRow()} variant="contained">Delete</Button>
             </div >
 
         );

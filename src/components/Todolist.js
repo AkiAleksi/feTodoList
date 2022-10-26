@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import TodoTable from '../TodoTable';
+import Button from '@mui/material/Button';
+import { DatePicker } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import TextField from '@mui/material/TextField';
+
 
 export default function TodoList() {
     const [newTodo, setNewTodo] = useState({ desc: '', date: '', priority: 'low' });
     const [todos, setTodos] = useState([]);
-    
+
 
     const inputChanged = (event, type) => {
         if (type === 'description') {
@@ -12,11 +18,12 @@ export default function TodoList() {
         }
 
         if (type === 'date') {
-            setNewTodo({ ...newTodo, date: event.target.value })
+            setNewTodo({ ...newTodo, date: event.toISOString() })
+            
         }
 
         if (type === 'priority') {
-            setNewTodo({...newTodo, priority: event.target.value})
+            setNewTodo({ ...newTodo, priority: event.target.value })
         }
     }
 
@@ -25,9 +32,9 @@ export default function TodoList() {
     }
 
     const deleteTodo = (deleteidx) => {
-        setTodos(todos.filter((todo, index) =>      
-        index !== deleteidx))
-       
+        setTodos(todos.filter((todo, index) =>
+            index !== deleteidx))
+
     }
 
     return (
@@ -35,8 +42,19 @@ export default function TodoList() {
         <div className="container">
             <h1>Simple Todolist</h1>
             <div className="input-group">
-                <span className="input-group-text">Date and task</span>
-                <input className="form-control" type="date" onChange={(event) => inputChanged(event, "date")} value={newTodo.date} />
+                <span className="input-group-text">Date, task and priority</span>
+
+
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                        label="Date"
+                        value={newTodo.date}
+                        onChange={(event) => {
+                            inputChanged(event, "date");
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
                 <input className="form-control" type="text" onChange={(event) => inputChanged(event, "description")} value={newTodo.desc} />
                 <select value={newTodo.priority} onChange={(event) => inputChanged(event, "priority")}>
                     <option disabled defaultValue>Priority</option>
@@ -45,10 +63,11 @@ export default function TodoList() {
                     <option value="high">High</option>
                 </select>
             </div>
-            <button onClick={addTodo} type="button" className="btn btn-danger">Add a new task</button>
-           
+            <Button onClick={addTodo} variant="contained">Add a new task</Button>
+
             <TodoTable deleteRow={deleteTodo} todos={todos} />
-           
+
         </div>
+
     );
 };
